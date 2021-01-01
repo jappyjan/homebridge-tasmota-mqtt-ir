@@ -36,6 +36,8 @@ export interface TvConfig {
       'BACK': string;
       'EXIT': string;
       'PLAY_PAUSE': string;
+      'PLAY': string;
+      'PAUSE': string;
       'INFORMATION': string;
     };
   };
@@ -184,7 +186,7 @@ export class Accessory {
           !keyIsConfigured &&
           (keyNumber === this.platform.Characteristic.RemoteKey.PLAY_PAUSE)
         ) {
-          keyIsConfigured = this.configuredRemoteKeys.some(alternativeKeyNumber => [100, 101].includes(alternativeKeyNumber));
+          keyIsConfigured = !!(this.deviceConfig.codes.keys.PLAY || this.deviceConfig.codes.keys.PAUSE);
         }
 
         return keyIsConfigured;

@@ -85,7 +85,7 @@ class Accessory {
                 let keyIsConfigured = keyNumber === value;
                 if (!keyIsConfigured &&
                     (keyNumber === this.platform.Characteristic.RemoteKey.PLAY_PAUSE)) {
-                    keyIsConfigured = this.configuredRemoteKeys.some(alternativeKeyNumber => [100, 101].includes(alternativeKeyNumber));
+                    keyIsConfigured = !!(this.deviceConfig.codes.keys.PLAY || this.deviceConfig.codes.keys.PAUSE);
                 }
                 return keyIsConfigured;
             })) {

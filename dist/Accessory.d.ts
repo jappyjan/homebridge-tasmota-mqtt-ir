@@ -27,6 +27,8 @@ export interface TvConfig {
             'BACK': string;
             'EXIT': string;
             'PLAY_PAUSE': string;
+            'PLAY': string;
+            'PAUSE': string;
             'INFORMATION': string;
         };
     };
