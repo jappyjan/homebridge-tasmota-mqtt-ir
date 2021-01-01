@@ -1,5 +1,5 @@
 import {API} from 'homebridge';
-import {Plugin} from './HttpIrTvPlugin';
+import {Platform} from './Platform';
 import {PLATFORM_NAME} from './settings';
 
 /**
@@ -9,6 +9,6 @@ export = (api: API) => {
   api.registerPlatform(
     'homebridge-' + PLATFORM_NAME,
     PLATFORM_NAME,
-    Plugin,
+    Platform,
   );
 };

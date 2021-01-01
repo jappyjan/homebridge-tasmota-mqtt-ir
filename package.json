@@ -21,7 +21,8 @@
     "watch": "npm run build && npm link && nodemon",
     "build": "rimraf ./dist && tsc",
     "prepublishOnly": "npm run lint && npm run build",
-    "test": "echo 'yeah... i should do testing...'"
+    "test": "echo 'yeah... i should do testing...'",
+    "deploy": "./pubish.sh"
   },
   "keywords": [
     "homebridge-plugin"
