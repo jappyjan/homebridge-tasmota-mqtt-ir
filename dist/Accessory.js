@@ -80,20 +80,6 @@ class Accessory {
         this.hackToPreventPowerOffWhenPressingKeyActive = true;
         setTimeout(() => this.hackToPreventPowerOffWhenPressingKeyActive = false, 3000);
         this.platform.log.debug('Remote Key Pressed ' + value);
-        if (!this.deviceConfig.codes.keys ||
-            !this.configuredRemoteKeys.some((keyNumber) => {
-                let keyIsConfigured = keyNumber === value;
-                if (!keyIsConfigured &&
-                    (keyNumber === this.platform.Characteristic.RemoteKey.PLAY_PAUSE)) {
-                    keyIsConfigured = !!(this.deviceConfig.codes.keys.PLAY || this.deviceConfig.codes.keys.PAUSE);
-                }
-                return keyIsConfigured;
-            })) {
-            this.platform.log.error(`Remote Key ${value} not configured in this.configuredRemoteKeys`);
-            this.platform.log.debug(JSON.stringify(this.configuredRemoteKeys, null, 4));
-            callback(new Error(`Remote-Key "${value}" not configured`));
-            return;
-        }
         let irCode = '';
         Object.keys(this.platform.Characteristic.RemoteKey).forEach((keyOfRemoteKeyObject) => {
             if (this.platform.Characteristic.RemoteKey[keyOfRemoteKeyObject] === value) {
