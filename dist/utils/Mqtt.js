@@ -8,13 +8,10 @@ class Mqtt extends events_1.EventEmitter {
         super();
         this.logger = logger;
         const options = {
-            username: config['mqttUsername'] || '',
-            password: config['mqttPassword'] || '',
+            username: config['mqtt-username'] || '',
+            password: config['mqtt-password'] || '',
         };
-        this.client = mqtt_1.connect('mqtt://' + config.mqttHost, options);
-        this.client.on('connect', function () {
-            this.client.subscribe('homeassistant/#');
-        });
+        this.client = mqtt_1.connect('mqtt://' + config['mqtt-host'], options);
     }
     sendMessage(topic, message) {
         if (!message) {

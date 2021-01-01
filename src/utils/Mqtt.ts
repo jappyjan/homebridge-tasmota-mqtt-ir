@@ -12,13 +12,10 @@ export class Mqtt extends EventEmitter {
     super();
 
     const options = {
-      username: config['mqttUsername'] || '',
-      password: config['mqttPassword'] || '',
+      username: config['mqtt-username'] || '',
+      password: config['mqtt-password'] || '',
     };
-    this.client = connectToMqttServer('mqtt://' + config.mqttHost, options);
-    this.client.on('connect', function(this: Mqtt) {
-      this.client.subscribe('homeassistant/#');
-    });
+    this.client = connectToMqttServer('mqtt://' + config['mqtt-host'], options);
   }
 
   sendMessage(topic, message) {

@@ -17,6 +17,27 @@
               "required": true,
               "default": "TV"
             },
+            "identifier": {
+              "title": "Tasmota Identifier",
+              "description": "Unique Identifier of the Tasmota Device, by default it is the last 3 segments of the MAC Address without colons",
+              "type": "string",
+              "required": true
+            },
+            "mqtt-host": {
+              "title": "MQTT Host",
+              "type": "string",
+              "required": true
+            },
+            "mqtt-username": {
+              "title": "MQTT User",
+              "type": "string",
+              "required": false
+            },
+            "mqtt-password": {
+              "title": "MQTT Password",
+              "type": "string",
+              "required": false
+            },
             "manufacturer": {
               "title": "TV Manufacturer",
               "type": "string",
@@ -31,12 +52,6 @@
               "title": "TV Serial",
               "type": "string",
               "required": false
-            },
-            "identifier": {
-              "title": "Tasmota Identifier",
-              "description": "Unique Identifier of the Tasmota Device, by default it is the last 3 segments of the MAC Address without colons",
-              "type": "string",
-              "required": true
             },
             "codeType": {
               "type": "string",
