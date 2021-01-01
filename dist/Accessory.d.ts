@@ -44,9 +44,10 @@ export declare class Accessory {
     private configuredRemoteKeys;
     private readonly deviceConfig;
     private readonly id;
+    private hackToPreventPowerOffWhenPressingKeyActive;
     private state;
     constructor(platform: Platform, accessory: PlatformAccessory);
-    private sendIrCommand;
+    private sendIRCode;
     private configureMetaCharacteristics;
     private onSetActiveIdentifier;
     private configureRemoteKeys;

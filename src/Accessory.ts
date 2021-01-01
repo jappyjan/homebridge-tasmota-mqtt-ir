@@ -53,6 +53,8 @@ export class Accessory {
   private readonly deviceConfig: TvConfig;
   private readonly id: string;
 
+  private hackToPreventPowerOffWhenPressingKeyActive = false;
+
   private state = {
     mute: false,
   };
@@ -82,7 +84,7 @@ export class Accessory {
     }
   }
 
-  private sendIrCommand(code: string) {
+  private sendIRCode(code: string) {
     const command = `cmnd/tasmota_${this.deviceConfig.identifier.toUpperCase()}/IRsend`;
     this.platform.mqtt.sendMessage(command, JSON.stringify({
       Protocol: this.deviceConfig.codeType,
@@ -156,6 +158,9 @@ export class Accessory {
   }
 
   private onRemoteKeyPress(value: CharacteristicValue, callback: CharacteristicSetCallback) {
+    this.hackToPreventPowerOffWhenPressingKeyActive = true;
+    setTimeout(() => this.hackToPreventPowerOffWhenPressingKeyActive = false, 3000);
+
     this.platform.log.debug('Remote Key Pressed ' + value);
 
     if (
@@ -185,7 +190,7 @@ export class Accessory {
       return;
     }
 
-    this.sendIrCommand(irCode);
+    this.sendIRCode(irCode);
     callback(null);
   }
 
@@ -231,9 +236,9 @@ export class Accessory {
     value: CharacteristicValue,
     callback: CharacteristicSetCallback,
   ): void {
-    this.platform.log.debug('setMute called with: ' + value);
+    this.platform.log.debug('Set Mute: ', value);
 
-    this.sendIrCommand(this.deviceConfig.codes.volume.mute);
+    this.sendIRCode(this.deviceConfig.codes.volume.mute);
 
     this.state.mute = !this.state.mute;
     callback(null);
@@ -242,7 +247,7 @@ export class Accessory {
   private getMute(
     callback: CharacteristicGetCallback,
   ): void {
-    this.platform.log.debug('getMute called');
+    this.platform.log.debug('Get Mute');
 
     callback(null, this.state.mute);
   }
@@ -251,29 +256,34 @@ export class Accessory {
     value: CharacteristicValue,
     callback: CharacteristicSetCallback,
   ): void {
-    this.platform.log.debug('setVolume called with: ' + value);
+    this.platform.log.debug('Set Volume: ', value);
 
     let irCode = this.deviceConfig.codes.volume.up;
     if (value === this.platform.Characteristic.VolumeSelector.DECREMENT) {
       irCode = this.deviceConfig.codes.volume.down;
     }
 
-    this.sendIrCommand(irCode);
+    this.sendIRCode(irCode);
     this.platform.log.debug('Sending code: ' + irCode);
     callback(null);
   }
 
   private setPower(value: CharacteristicValue, callback: CharacteristicSetCallback) {
-    this.platform.log.debug('Set Characteristic On ->', value);
+    this.platform.log.debug('Set Power: ', value);
 
-    this.sendIrCommand(this.deviceConfig.codes.power);
+    if (!this.hackToPreventPowerOffWhenPressingKeyActive) {
+      this.sendIRCode(this.deviceConfig.codes.power);
+    } else {
+      this.platform.log.debug('setPower disabled to prevent bug that turns TV off when pressing the information button');
+    }
+
     callback(null);
   }
 
   private getPower(
     callback: CharacteristicGetCallback,
   ): void {
-    this.platform.log.debug('getPower called');
+    this.platform.log.debug('Get Power');
 
     callback(null, true);
   }
