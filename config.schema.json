@@ -8,7 +8,7 @@
       "devices": {
         "type": "array",
         "items": {
-          "title": "ESP8266 Remotes",
+          "title": "Tasmota IR Devices",
           "type": "object",
           "properties": {
             "name": {
@@ -17,38 +17,26 @@
               "required": true,
               "default": "TV"
             },
-            "tv-manufacturer": {
+            "manufacturer": {
               "title": "TV Manufacturer",
               "type": "string",
               "required": false
             },
-            "tv-model": {
+            "model": {
               "title": "TV Model",
               "type": "string",
               "required": false
             },
-            "tv-serial": {
+            "serial": {
               "title": "TV Serial",
               "type": "string",
               "required": false
             },
-            "ip": {
-              "title": "ESP8266 IP-Address/Hostname",
+            "identifier": {
+              "title": "Tasmota Identifier",
+              "description": "Unique Identifier of the Tasmota Device, by default it is the last 3 segments of the MAC Address without colons",
               "type": "string",
-              "required": true,
-              "format": "hostname"
-            },
-            "port": {
-              "title": "ESP8266 Port",
-              "type": "number",
-              "required": true,
-              "default": 80
-            },
-            "path": {
-              "title": "ESP8266 WS Path",
-              "type": "string",
-              "required": true,
-              "default": "/ws"
+              "required": true
             },
             "codeType": {
               "type": "string",
