@@ -8,7 +8,6 @@ import {
 } from 'homebridge';
 
 import {Platform} from './Platform';
-import * as HomeKitTypes from 'hap-nodejs/dist/lib/gen';
 
 export interface TvConfig {
   'name': string;
@@ -40,11 +39,6 @@ export interface TvConfig {
       'INFORMATION': string;
     };
   };
-}
-
-class ExtendedRemoteKeys extends HomeKitTypes.TV.RemoteKey {
-  static readonly PLAY = 100;
-  static readonly PAUSE = 101;
 }
 
 /**
@@ -155,13 +149,19 @@ export class Accessory {
     this.televisionService.getCharacteristic(this.platform.Characteristic.RemoteKey)
       .on('set', this.onRemoteKeyPress.bind(this));
 
-    let configuredRemoteKeyStrings: (keyof ExtendedRemoteKeys)[] = [];
-    if (this.deviceConfig.codes.keys) {
-      configuredRemoteKeyStrings = Object.keys(this.deviceConfig.codes.keys) as unknown as (keyof ExtendedRemoteKeys)[];
-    }
+    const ExtendedRemoteKeys: {[key: string]: number} = {
+      ...this.platform.Characteristic.RemoteKey,
+      PLAY: 100,
+      PAUSE: 101,
+    } as unknown as {[key: string]: number};
 
+    let configuredRemoteKeyStrings: (keyof typeof ExtendedRemoteKeys)[] = [];
+    if (this.deviceConfig.codes.keys) {
+      configuredRemoteKeyStrings = Object.keys(this.deviceConfig.codes.keys) as (keyof typeof ExtendedRemoteKeys)[];
+    }
     configuredRemoteKeyStrings.forEach(key => {
       this.platform.log.debug('Configuring Remote-Key: ' + key);
+
 
       this.configuredRemoteKeys.push(
         ExtendedRemoteKeys[key],

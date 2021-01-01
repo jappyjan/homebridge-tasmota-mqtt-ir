@@ -1,30 +1,6 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Accessory = void 0;
-const HomeKitTypes = __importStar(require("hap-nodejs/dist/lib/gen"));
-class ExtendedRemoteKeys extends HomeKitTypes.TV.RemoteKey {
-}
-ExtendedRemoteKeys.PLAY = 100;
-ExtendedRemoteKeys.PAUSE = 101;
 /**
  * Platform Accessory
  * An instance of this class is created for each accessory your platform registers
@@ -86,6 +62,11 @@ class Accessory {
     configureRemoteKeys() {
         this.televisionService.getCharacteristic(this.platform.Characteristic.RemoteKey)
             .on('set', this.onRemoteKeyPress.bind(this));
+        const ExtendedRemoteKeys = {
+            ...this.platform.Characteristic.RemoteKey,
+            PLAY: 100,
+            PAUSE: 101,
+        };
         let configuredRemoteKeyStrings = [];
         if (this.deviceConfig.codes.keys) {
             configuredRemoteKeyStrings = Object.keys(this.deviceConfig.codes.keys);
