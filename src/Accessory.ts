@@ -177,7 +177,18 @@ export class Accessory {
 
     if (
       !this.deviceConfig.codes.keys ||
-      !this.configuredRemoteKeys.find((item) => item === value)
+      !this.configuredRemoteKeys.some((keyNumber) => {
+        let keyIsConfigured = keyNumber === value;
+
+        if (
+          !keyIsConfigured &&
+          (keyNumber === this.platform.Characteristic.RemoteKey.PLAY_PAUSE)
+        ) {
+          keyIsConfigured = this.configuredRemoteKeys.some(alternativeKeyNumber => [100, 101].includes(alternativeKeyNumber));
+        }
+
+        return keyIsConfigured;
+      })
     ) {
       this.platform.log.error(`Remote Key ${value} not configured in this.configuredRemoteKeys`);
       this.platform.log.debug(JSON.stringify(this.configuredRemoteKeys, null, 4));
