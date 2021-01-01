@@ -55,7 +55,6 @@ export class Accessory {
 
   private state = {
     mute: false,
-    power: false,
   };
 
   constructor(
@@ -268,7 +267,6 @@ export class Accessory {
     this.platform.log.debug('Set Characteristic On ->', value);
 
     this.sendIrCommand(this.deviceConfig.codes.power);
-    this.state.power = !this.state.power;
     callback(null);
   }
 
@@ -277,6 +275,6 @@ export class Accessory {
   ): void {
     this.platform.log.debug('getPower called');
 
-    callback(null, this.state.power);
+    callback(null, true);
   }
 }

@@ -13,7 +13,6 @@ class Accessory {
         this.configuredRemoteKeys = [];
         this.state = {
             mute: false,
-            power: false,
         };
         this.deviceConfig = accessory.context.device;
         this.id = this.deviceConfig.name + this.deviceConfig.identifier;
@@ -137,12 +136,11 @@ class Accessory {
     setPower(value, callback) {
         this.platform.log.debug('Set Characteristic On ->', value);
         this.sendIrCommand(this.deviceConfig.codes.power);
-        this.state.power = !this.state.power;
         callback(null);
     }
     getPower(callback) {
         this.platform.log.debug('getPower called');
-        callback(null, this.state.power);
+        callback(null, true);
     }
 }
 exports.Accessory = Accessory;
