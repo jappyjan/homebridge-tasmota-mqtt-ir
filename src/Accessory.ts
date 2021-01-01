@@ -57,6 +57,7 @@ export class Accessory {
 
   private state = {
     mute: false,
+    isPlaying: true,
   };
 
   constructor(
@@ -179,6 +180,11 @@ export class Accessory {
         if (this.platform.Characteristic.RemoteKey[keyOfRemoteKeyObject] === value) {
           this.platform.log.debug(`Remote-Key ${value} maps to ${keyOfRemoteKeyObject}`);
           irCode = this.deviceConfig.codes.keys[keyOfRemoteKeyObject];
+
+          if (!irCode && keyOfRemoteKeyObject === 'PLAY_PAUSE') {
+            const playState = this.state.isPlaying ? 'PAUSE' : 'PLAY';
+            irCode = this.deviceConfig.codes.keys[playState];
+          }
         }
       },
     );
@@ -191,6 +197,8 @@ export class Accessory {
     }
 
     this.sendIRCode(irCode);
+    this.state.isPlaying = !this.state.isPlaying;
+
     callback(null);
   }
 

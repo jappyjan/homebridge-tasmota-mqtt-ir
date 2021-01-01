@@ -148,7 +148,17 @@
                       "required": false
                     },
                     "PLAY_PAUSE": {
-                      "title": "Play Pause",
+                      "title": "Play Pause (Toggle)",
+                      "type": "string",
+                      "required": false
+                    },
+                    "PLAY": {
+                      "title": "Play",
+                      "type": "string",
+                      "required": false
+                    },
+                    "PAUSE": {
+                      "title": "Pause",
                       "type": "string",
                       "required": false
                     },

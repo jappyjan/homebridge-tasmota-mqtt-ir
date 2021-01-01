@@ -14,6 +14,7 @@ class Accessory {
         this.hackToPreventPowerOffWhenPressingKeyActive = false;
         this.state = {
             mute: false,
+            isPlaying: true,
         };
         this.deviceConfig = accessory.context.device;
         this.id = this.deviceConfig.name + this.deviceConfig.identifier;
@@ -83,6 +84,10 @@ class Accessory {
             if (this.platform.Characteristic.RemoteKey[keyOfRemoteKeyObject] === value) {
                 this.platform.log.debug(`Remote-Key ${value} maps to ${keyOfRemoteKeyObject}`);
                 irCode = this.deviceConfig.codes.keys[keyOfRemoteKeyObject];
+                if (!irCode && keyOfRemoteKeyObject === 'PLAY_PAUSE') {
+                    const playState = this.state.isPlaying ? 'PAUSE' : 'PLAY';
+                    irCode = this.deviceConfig.codes.keys[playState];
+                }
             }
         });
         if (!irCode) {
@@ -92,6 +97,7 @@ class Accessory {
             return;
         }
         this.sendIRCode(irCode);
+        this.state.isPlaying = !this.state.isPlaying;
         callback(null);
     }
     configureVolumeKeys() {
