@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Platform = void 0;
 const settings_1 = require("./settings");
 const Accessory_1 = require("./Accessory");
+const Mqtt_1 = require("./utils/Mqtt");
 class Platform {
     constructor(log, config, api) {
         this.log = log;
@@ -13,6 +14,7 @@ class Platform {
         // this is used to track restored cached accessories
         this.accessories = [];
         this.log.debug('Finished initializing platform:', this.config.name);
+        this.mqtt = new Mqtt_1.Mqtt(config, log);
         // When this event is fired it means Homebridge has restored all cached accessories from disk.
         // Dynamic Platform plugins should only register new accessories after this event was fired,
         // in order to ensure they weren't added to homebridge already. This event can also be used

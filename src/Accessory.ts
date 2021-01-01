@@ -8,7 +8,6 @@ import {
 } from 'homebridge';
 
 import {Platform} from './Platform';
-import {Mqtt} from './utils/Mqtt';
 
 export interface TvConfig {
   'name': string;
@@ -52,7 +51,6 @@ export class Accessory {
   private speakerService?: Service;
   private configuredRemoteKeys: number[] = [];
   private readonly deviceConfig: TvConfig;
-  private readonly mqtt: Mqtt;
   private readonly id: string;
 
   private state = {
@@ -68,7 +66,6 @@ export class Accessory {
     this.id = this.deviceConfig.name + this.deviceConfig.identifier;
 
     accessory.category = Categories.TELEVISION;
-    this.mqtt = new Mqtt(this.deviceConfig, this.platform.log);
 
     this.televisionService =
       this.accessory.getService(this.id) ||
@@ -88,7 +85,7 @@ export class Accessory {
 
   private sendIrCommand(code: string) {
     const command = `cmnd/tasmota_${this.deviceConfig.identifier.toUpperCase()}/IRsend`;
-    this.accessory.context.mqttHost.sendMessage(command, JSON.stringify({
+    this.platform.mqtt.sendMessage(command, JSON.stringify({
       Protocol: this.deviceConfig.codeType,
       Bits: 32,
       Data: code,

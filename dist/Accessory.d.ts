@@ -43,7 +43,6 @@ export declare class Accessory {
     private speakerService?;
     private configuredRemoteKeys;
     private readonly deviceConfig;
-    private readonly mqtt;
     private readonly id;
     private state;
     constructor(platform: Platform, accessory: PlatformAccessory);

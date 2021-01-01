@@ -1,4 +1,5 @@
 import { API, Characteristic, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig, Service } from 'homebridge';
+import { Mqtt } from './utils/Mqtt';
 export declare class Platform implements DynamicPlatformPlugin {
     readonly log: Logger;
     readonly config: PlatformConfig;
@@ -6,6 +7,7 @@ export declare class Platform implements DynamicPlatformPlugin {
     readonly Service: typeof Service;
     readonly Characteristic: typeof Characteristic;
     readonly accessories: PlatformAccessory[];
+    readonly mqtt: Mqtt;
     constructor(log: Logger, config: PlatformConfig, api: API);
     /**
      * This function is invoked when homebridge restores cached accessories from disk at startup.

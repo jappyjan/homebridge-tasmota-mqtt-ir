@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Accessory = void 0;
-const Mqtt_1 = require("./utils/Mqtt");
 /**
  * Platform Accessory
  * An instance of this class is created for each accessory your platform registers
@@ -19,7 +18,6 @@ class Accessory {
         this.deviceConfig = accessory.context.device;
         this.id = this.deviceConfig.name + this.deviceConfig.identifier;
         accessory.category = 31 /* TELEVISION */;
-        this.mqtt = new Mqtt_1.Mqtt(this.deviceConfig, this.platform.log);
         this.televisionService =
             this.accessory.getService(this.id) ||
                 this.accessory.addService(this.platform.Service.Television, this.deviceConfig.name, this.id);
@@ -31,7 +29,7 @@ class Accessory {
     }
     sendIrCommand(code) {
         const command = `cmnd/tasmota_${this.deviceConfig.identifier.toUpperCase()}/IRsend`;
-        this.accessory.context.mqttHost.sendMessage(command, JSON.stringify({
+        this.platform.mqtt.sendMessage(command, JSON.stringify({
             Protocol: this.deviceConfig.codeType,
             Bits: 32,
             Data: code,
