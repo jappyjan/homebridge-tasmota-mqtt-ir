@@ -7,11 +7,13 @@ class Mqtt extends events_1.EventEmitter {
     constructor(config, logger) {
         super();
         this.logger = logger;
+        const mqttHost = config['mqtt-host'];
         const options = {
             username: config['mqtt-username'] || '',
             password: config['mqtt-password'] || '',
         };
-        this.client = mqtt_1.connect('mqtt://' + config['mqtt-host'], options);
+        this.logger.info(`Connecting to MQTT Host "${mqttHost}"`, options);
+        this.client = mqtt_1.connect('mqtt://' + mqttHost, options);
     }
     sendMessage(topic, message) {
         if (!message) {
