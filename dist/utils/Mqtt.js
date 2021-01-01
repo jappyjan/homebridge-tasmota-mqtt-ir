@@ -12,6 +12,9 @@ class Mqtt extends events_1.EventEmitter {
             password: config['mqttPassword'] || '',
         };
         this.client = mqtt_1.connect('mqtt://' + config.mqttHost, options);
+        this.client.on('connect', function () {
+            this.client.subscribe('homeassistant/#');
+        });
     }
     sendMessage(topic, message) {
         if (!message) {

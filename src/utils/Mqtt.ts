@@ -16,6 +16,9 @@ export class Mqtt extends EventEmitter {
       password: config['mqttPassword'] || '',
     };
     this.client = connectToMqttServer('mqtt://' + config.mqttHost, options);
+    this.client.on('connect', function(this: Mqtt) {
+      this.client.subscribe('homeassistant/#');
+    });
   }
 
   sendMessage(topic, message) {
