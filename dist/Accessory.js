@@ -84,7 +84,7 @@ class Accessory {
             if (this.platform.Characteristic.RemoteKey[keyOfRemoteKeyObject] === value) {
                 this.platform.log.debug(`Remote-Key ${value} maps to ${keyOfRemoteKeyObject}`);
                 irCode = this.deviceConfig.codes.keys[keyOfRemoteKeyObject];
-                if (!irCode && keyOfRemoteKeyObject === 'PLAY_PAUSE') {
+                if (!irCode && (keyOfRemoteKeyObject === 'PLAY_PAUSE')) {
                     const playState = this.state.isPlaying ? 'PAUSE' : 'PLAY';
                     irCode = this.deviceConfig.codes.keys[playState];
                 }
