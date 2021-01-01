@@ -1,0 +1,166 @@
+{
+  "pluginAlias": "tasmota-mqtt-ir",
+  "pluginType": "platform",
+  "singular": true,
+  "schema": {
+    "type": "object",
+    "properties": {
+      "devices": {
+        "type": "array",
+        "items": {
+          "title": "ESP8266 Remotes",
+          "type": "object",
+          "properties": {
+            "name": {
+              "title": "Name",
+              "type": "string",
+              "required": true,
+              "default": "TV"
+            },
+            "tv-manufacturer": {
+              "title": "TV Manufacturer",
+              "type": "string",
+              "required": false
+            },
+            "tv-model": {
+              "title": "TV Model",
+              "type": "string",
+              "required": false
+            },
+            "tv-serial": {
+              "title": "TV Serial",
+              "type": "string",
+              "required": false
+            },
+            "ip": {
+              "title": "ESP8266 IP-Address/Hostname",
+              "type": "string",
+              "required": true,
+              "format": "hostname"
+            },
+            "port": {
+              "title": "ESP8266 Port",
+              "type": "number",
+              "required": true,
+              "default": 80
+            },
+            "path": {
+              "title": "ESP8266 WS Path",
+              "type": "string",
+              "required": true,
+              "default": "/ws"
+            },
+            "codeType": {
+              "type": "string",
+              "title": "IR Code Type",
+              "required": true,
+              "default": "SAMSUNG"
+            },
+            "codes": {
+              "required": true,
+              "title": "IR-Codes",
+              "type": "object",
+              "properties": {
+                "power": {
+                  "title": "Power Toggle",
+                  "type": "string",
+                  "required": true,
+                  "default": "0xE0E040BF"
+                },
+                "volume": {
+                  "title": "Speaker",
+                  "type": "object",
+                  "properties": {
+                    "up": {
+                      "title": "Volume Up",
+                      "type": "string",
+                      "required": true,
+                      "default": "0xE0E0E01F"
+                    },
+                    "down": {
+                      "title": "Volume Down",
+                      "type": "string",
+                      "required": true,
+                      "default": "0xE0E0D02F"
+                    }
+                  }
+                },
+                "keys": {
+                  "title": "Keys",
+                  "type": "object",
+                  "properties": {
+                    "REWIND": {
+                      "title": "Rewind",
+                      "type": "string",
+                      "required": false
+                    },
+                    "FAST_FORWARD": {
+                      "title": "Fast Forward",
+                      "type": "string",
+                      "required": false
+                    },
+                    "NEXT_TRACK": {
+                      "title": "Next Track",
+                      "type": "string",
+                      "required": false
+                    },
+                    "PREVIOUS_TRACK": {
+                      "title": "Previous Track",
+                      "type": "string",
+                      "required": false
+                    },
+                    "ARROW_UP": {
+                      "title": "Arrow Up",
+                      "type": "string",
+                      "required": false
+                    },
+                    "ARROW_DOWN": {
+                      "title": "Arrow Down",
+                      "type": "string",
+                      "required": false
+                    },
+                    "ARROW_LEFT": {
+                      "title": "Arrow Left",
+                      "type": "string",
+                      "required": false
+                    },
+                    "ARROW_RIGHT": {
+                      "title": "Arrow Right",
+                      "type": "string",
+                      "required": false
+                    },
+                    "SELECT": {
+                      "title": "Select",
+                      "type": "string",
+                      "required": false
+                    },
+                    "BACK": {
+                      "title": "Back",
+                      "type": "string",
+                      "required": false
+                    },
+                    "EXIT": {
+                      "title": "Exit",
+                      "type": "string",
+                      "required": false
+                    },
+                    "PLAY_PAUSE": {
+                      "title": "Play Pause",
+                      "type": "string",
+                      "required": false
+                    },
+                    "INFORMATION": {
+                      "title": "Information",
+                      "type": "string",
+                      "required": false
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

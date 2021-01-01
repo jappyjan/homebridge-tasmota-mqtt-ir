@@ -1,0 +1,44 @@
+{
+  "displayName": "http ir-tv",
+  "name": "@jappyjan/homeridge-tasmota-mqtt-ir",
+  "version": "1.2.4",
+  "description": "A short description about what your plugin does.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jappyjan/homebridge-tasmota-mqtt-ir.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jappyjan/homebridge-tasmota-mqtt-ir/issues"
+  },
+  "engines": {
+    "node": ">=10.17.0",
+    "homebridge": ">=1.0.0"
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "eslint src/**.ts --max-warnings=0",
+    "watch": "npm run build && npm link && nodemon",
+    "build": "rimraf ./dist && tsc",
+    "prepublishOnly": "npm run lint && npm run build",
+    "test": "echo 'yeah... i should do testing...'"
+  },
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "dependencies": {
+    "mqtt": "^4.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^14.11.8",
+    "@types/websocket": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.4.1",
+    "@typescript-eslint/parser": "^4.4.1",
+    "eslint": "^7.11.0",
+    "homebridge": "^1.2.2",
+    "nodemon": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.3"
+  }
+}
