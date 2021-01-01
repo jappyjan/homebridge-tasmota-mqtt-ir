@@ -50,9 +50,7 @@ class Accessory {
         this.televisionService.setCharacteristic(this.platform.Characteristic.SleepDiscoveryMode, this.platform.Characteristic.SleepDiscoveryMode.ALWAYS_DISCOVERABLE);
         this.televisionService.setCharacteristic(this.platform.Characteristic.ConfiguredName, this.deviceConfig.name);
         this.televisionService.setCharacteristic(this.platform.Characteristic.Name, this.deviceConfig.name);
-        const accessoryInformationServiceId = this.id + '--accessory-information';
-        const accessoryInformationService = this.accessory.getService(accessoryInformationServiceId) ||
-            this.accessory.addService(this.platform.Service.AccessoryInformation, this.deviceConfig.name, accessoryInformationServiceId);
+        const accessoryInformationService = this.accessory.getService(this.platform.Service.AccessoryInformation);
         accessoryInformationService
             .setCharacteristic(this.platform.Characteristic.Manufacturer, this.deviceConfig.manufacturer || 'Default-Manufacturer')
             .setCharacteristic(this.platform.Characteristic.Model, this.deviceConfig.model || 'Default-Model')

@@ -124,14 +124,7 @@ export class Accessory {
       this.deviceConfig.name,
     );
 
-    const accessoryInformationServiceId = this.id + '--accessory-information';
-    const accessoryInformationService =
-      this.accessory.getService(accessoryInformationServiceId) ||
-      this.accessory.addService(
-        this.platform.Service.AccessoryInformation,
-        this.deviceConfig.name,
-        accessoryInformationServiceId,
-      );
+    const accessoryInformationService = this.accessory.getService(this.platform.Service.AccessoryInformation)!;
 
     accessoryInformationService
       .setCharacteristic(
