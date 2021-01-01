@@ -65,7 +65,10 @@ class Accessory {
         const configuredRemoteKeyStrings = this.deviceConfig.codes.keys ? Object.keys(this.deviceConfig.codes.keys) : [];
         configuredRemoteKeyStrings.forEach(key => {
             this.platform.log.debug('Configuring Remote-Key: ' + key);
-            this.configuredRemoteKeys.push(this.platform.Characteristic.RemoteKey[key]);
+            const AllKeys = this.platform.Characteristic.RemoteKey;
+            AllKeys.PLAY = AllKeys.PLAY_PAUSE;
+            AllKeys.PAUSE = AllKeys.PLAY_PAUSE;
+            this.configuredRemoteKeys.push(AllKeys[key]);
         });
     }
     onRemoteKeyPress(value, callback) {
